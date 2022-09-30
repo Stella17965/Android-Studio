@@ -15,7 +15,7 @@
         android:inputType="textPersonName"
 
         android:minHeight="48dp"
-        android:text="請輸入玩家姓名"
+        android:hint="請輸入玩家姓名"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.154"
         app:layout_constraintStart_toStartOf="parent"
