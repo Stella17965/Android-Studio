@@ -2,8 +2,8 @@ package ch3;
 
 public class p20 {
 	public static void main(String[]args) {
-		Car car1;
-		car1 =new Car();
+		CarP20 car1;
+		car1 =new CarP20();
 		
 		car1.num=1234;
 		car1.gas=-10;
@@ -11,7 +11,7 @@ public class p20 {
 		car1.show();
 	}
 }
-class Car{
+class CarP20{
 	int num;
 	double gas;
 	

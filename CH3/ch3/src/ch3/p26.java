@@ -2,17 +2,17 @@ package ch3;
 
 public class p26 {
 	public static void main(String[]args) {
-		Car car1;
-		car1 =new Car();
+		CarP26 car1;
+		car1 =new CarP26();
 		car1.show();
 	}
 }
 
-class Car{
+class CarP26{
 	private int num;
 	private double gas;
 	
-	public Car() {
+	public CarP26() {
 		num=0;
 		gas=0.0;
 		System.out.println("生產了車子");

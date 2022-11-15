@@ -2,8 +2,8 @@ package ch3;
 
 public class p17 {
 	public static void main(String[]args) {
-		Car car1;
-		car1=new Car();
+		CarP17 car1;
+		car1=new CarP17();
 		car1.setNumGas(1234,20.5);
 		int number = car1.getNum();
 		double gasoline=car1.getGas();
@@ -12,7 +12,7 @@ public class p17 {
 	}
 }
 
-class Car{
+class CarP17{
 	int num;
 	double gas;
 	

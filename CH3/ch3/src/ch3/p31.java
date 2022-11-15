@@ -2,20 +2,23 @@ package ch3;
 
 public class p31 {
 	public static void main(String[]args) {
-		Car.showSum();
-		Car car1;
-		car1=new Car();
+		CarP31.showSum();
+		CarP31 car1;
+		car1=new CarP31();
 		car1.setCar(1234,20.5);
-		Car.showSum();
+		CarP31.showSum();
 		
+		CarP31 car2;
+		car2=new CarP31();
+		car2.setCar(4567, 20.5);
 	}
 }
-class Car{
+class CarP31{
 	public static int sum=0;
 	private int num;
 	private double gas;
 	
-	public Car() {
+	public CarP31() {
 		num=0;
 		gas=0.0;
 		sum++;
