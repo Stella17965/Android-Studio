@@ -4,49 +4,45 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-
 
 class MainActivity : AppCompatActivity() {
-    lateinit var tv_clock: TextView
-    lateinit var btn_start: Button
-    private var flag = false
-    private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
+    //建立 BroadcastReceiver 物件
+    private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val b = intent.extras
-            tv_clock!!.text =
-                String.format("%02d:%02d:%02d", b!!.getInt("H"), b.getInt("M"), b.getInt("S"))
+            //接收廣播後，解析 Intent 取得字串訊息
+            intent.extras?.let {
+                val tv_msg = findViewById<TextView>(R.id.tv_msg)
+                tv_msg.text = "${it.getString("msg")}"
+            }
         }
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        tv_clock = findViewById(R.id.tv_clock)
-        btn_start = findViewById(R.id.btn_start)
-        registerReceiver(receiver, IntentFilter("MyMessage"))
-        flag = MyService.flag
-        if (flag) btn_start.setText("暫停") else btn_start.setText("開始")
-        btn_start.setOnClickListener(View.OnClickListener {
-            flag = !flag
-            if (flag) {
-                btn_start.setText("暫停")
-                Toast.makeText(this@MainActivity, "計時開始", Toast.LENGTH_SHORT).show()
-            } else {
-                btn_start.setText("開始")
-                Toast.makeText(this@MainActivity, "計時暫停", Toast.LENGTH_SHORT).show()
-            }
-            startService(Intent(this@MainActivity, MyService::class.java).putExtra("flag", flag))
-        })
+        findViewById<Button>(R.id.btn_music).setOnClickListener {
+            register("music")
+        }
+        findViewById<Button>(R.id.btn_new).setOnClickListener {
+            register("new")
+        }
+        findViewById<Button>(R.id.btn_sport).setOnClickListener {
+            register("sport")
+        }
     }
-
-    public override fun onDestroy() {
+    override fun onDestroy() {
+        unregisterReceiver(receiver) //註銷廣播
         super.onDestroy()
-        unregisterReceiver(receiver)
+    }
+    private fun register(channel: String) {
+        //建立 IntentFilter 物件來指定接收的頻道，並註冊 Receiver
+        val intentFilter = IntentFilter(channel)
+        registerReceiver(receiver, intentFilter)
+        //建立 Intent 物件，使其夾帶頻道資料，並啟動 MyService 服務
+        val i = Intent(this, MyService::class.java)
+        startService(i.putExtra("channel", channel))
     }
 }

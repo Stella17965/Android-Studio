@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab13_withKotlin"
         tools:targetApi="31">
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

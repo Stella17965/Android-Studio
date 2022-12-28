@@ -4,34 +4,26 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 
-
 class MyService : Service() {
     override fun onCreate() {
         super.onCreate()
-        Thread {
+        Thread { //使用 Thread 執行耗時任務
             try {
-                Thread.sleep(5000)
-                val intent = Intent(this@MyService, MainActivity2::class.java)
+                Thread.sleep(3000) //延遲三秒
+                //宣告 Intent，從 MyService 啟動 MainActivity2
+                val intent = Intent(this, MainActivity2::class.java)
+                //加入 Flag 表示要產生一個新的 Activity
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                this@MyService.startActivity(intent)
+                startActivity(intent)
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }
         }.start()
-        stopSelf()
+    }
+    override fun onStartCommand(intent: Intent,
+                                flags: Int, startid: Int): Int {
+        return START_NOT_STICKY //Service 終止後不再重啟
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        super.onStartCommand(intent, flags, startId)
-        return START_STICKY
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onBind(intent: Intent): IBinder? {
-        // TODO: Return the communication channel to the service.
-        throw UnsupportedOperationException("Not yet implemented")
-    }
+    override fun onBind(intent: Intent): IBinder? = null
 }
